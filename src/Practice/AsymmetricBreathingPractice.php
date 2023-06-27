@@ -55,15 +55,14 @@ class AsymmetricBreathingPractice extends Practice
                 $progressBar->setProgressCharacter('<fg=#b7cfe4;bg=#3e5069>▶</>');
                 $progressBar->advance();
                 usleep(1_000_000 / 50);
-                $time--;
             }
             for ($i = 0; $i < 100; $i++) {
                 $progressBar->setMessage('Exhale through the mouth');
                 $progressBar->setProgressCharacter('<fg=#3e5069;bg=#b7cfe4>◀</>');
                 $progressBar->advance(-1);
                 usleep((int)(1_000_000 / 12.5));
-                $time--;
             }
+            $time = $time - 10;
 
         }
 
