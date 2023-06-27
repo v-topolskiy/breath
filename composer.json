@@ -1,15 +1,26 @@
 {
-  "name": "v-topolskiy/breath",
-  "description": "breathing practices",
-  "minimum-stability": "stable",
-  "license": "proprietary",
-  "authors": [
-    {
-      "name": "Vadim Topolskiy",
-      "email": "v.topolskiy@mu.se"
+    "name": "v-topolskiy/breath",
+    "description": "breathing practices",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Vadim Topolskiy",
+            "email": "v.topolskiy@mu.se"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "codeception/codeception": "^5.0.0",
+        "codeception/module-phpbrowser": "*",
+        "symfony/console": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "breath\\": "src/"
+        }
+    },
+    "require-dev": {
+        "codeception/module-asserts": "^3.0"
     }
-  ],
-  "require": {
-    "php": ">=8.2"
-  }
 }
