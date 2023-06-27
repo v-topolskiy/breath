@@ -25,7 +25,7 @@ class PracticeCommand extends \Symfony\Component\Console\Command\Command
         try {
             $factory = new PracticeFactory(new BoxPractice());
             $practice = $factory->createPractice($input->getArgument('practice'));
-            $practice->execute();
+            $practice->printToConsole($output);
 
             return Command::SUCCESS;
         } catch (UndefinedPractice $e) {
@@ -38,7 +38,7 @@ class PracticeCommand extends \Symfony\Component\Console\Command\Command
     {
         $this
             ->setHelp('This command allows you to start breathing practice')
-            ->addArgument('practice', InputArgument::REQUIRED, 'Practice name');
+            ->addArgument('practice', InputArgument::OPTIONAL, 'Practice name', 'box');
     }
 
 }

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace breath\Practice;
 
+use Symfony\Component\Console\Cursor;
+use Symfony\Component\Console\Output\OutputInterface;
+
 class BoxPractice extends Practice
 {
     /**
@@ -12,11 +15,11 @@ class BoxPractice extends Practice
     public function getInstruction(): array
     {
         return [
-            1 => 'Сделайте вдох на четыре счета',
-            2 => 'Задержите дыхание на четыре счета',
-            3 => 'Сделайте выдох на четыре счета',
-            4 => 'Задержите дыхание на четыре счета',
-            5 => 'Начните цикл заново и дышите так 1—5 минут',
+            1 => 'Inhale for a count of four',
+            2 => 'Hold your breath for a count of four',
+            3 => 'Exhale for a count of four',
+            4 => 'Hold your breath for a count of four',
+            5 => 'Start the cycle again and breathe this way for 5 minutes',
         ];
     }
 
@@ -26,25 +29,71 @@ class BoxPractice extends Practice
     public function getDescription(): array
     {
         return [
-            'Эту технику используют спецназовцы ВМС США, чтобы быстро овладеть собой в стрессовой ситуации.',
-            'Представьте коробку или квадрат с равными сторонами. Каждая сторона вашего квадрата — один такт дыхания: вдох, задержка дыхания, выдох, задержка дыхания. Как и стороны квадрата, такты равны: каждый длится по 4 счета или секунды.',
-            'Когда дышите, представляйте движение по сторонам этого квадрата. По словам клинического психолога Скотта Симингтона, такая визуализация помогает сконцентрироваться на дыхании и быстрее привыкнуть к нужному ритму.'
+            'This technique is used by the U.S. Navy Seals to quickly regain control in a stressful situation.',
+            'Imagine a box or square with equal sides. Each side of your square is one breath cycle: inhale, breath hold, exhale, breath hold. Like the sides of a square, the cycles are equal: each lasts for 4 counts or seconds.',
+            'When you breathe, imagine moving along the sides of this square. According to clinical psychologist Scott Symington, such visualization helps to focus on the breath and adapt to the necessary rhythm more quickly.'
         ];
     }
 
-    public function execute(): void
+
+    /**
+     * {@inheritdoc}
+     */
+    public function printToConsole(OutputInterface $output): void
     {
-        $commands = ['inhale', 'hold', 'exhale', 'hold'];
+        $zoom = 2;
+        $cursor = new Cursor($output);
+        $cursor->clearScreen();
+
+        $symbol = '*';
+
+        $cursor->moveToPosition(strlen($symbol) + 1, 1);
+
+        $commands = ['right' => 'inhale', 'down' => 'hold', 'left' => 'exhale', 'up' => 'hold'];
+
+        $length = 4 * $zoom;
+
         $timer = 5 * 60;
         while ($timer > 0) {
-            foreach ($commands as $command) {
-                echo sprintf("%s :", $command);
-                for ($i = 0; $i < 4; $i++) {
-                    echo ' • ';
-                    sleep(1);
-                    $timer--;
+            foreach ($commands as $position => $command) {
+                for ($i = 0; $i < $length - 1; $i++) {
+
+                    $cursor->savePosition();
+                    $cursor->moveToPosition((strlen($symbol) * $length) / 2, strlen($symbol) * $length + 2);
+                    $output->write('<info>[' . str_pad($command, 8, ' ', STR_PAD_BOTH) . ']</info>');
+                    $cursor->moveToPosition((strlen($symbol) * $length) / 2, strlen($symbol) * $length + 4);
+                    $output->write('<info>[' . str_pad(date('i:s', (int)$timer), 8, ' ', STR_PAD_BOTH) . ']</info>');
+                    $cursor->restorePosition();
+
+                    $output->write('<fg=gray>' . $symbol . '</>');
+
+                    switch ($position) {
+                        case 'right':
+                        {
+                            $cursor->moveRight();
+                            break;
+                        }
+                        case 'down':
+                        {
+                            $cursor->moveDown();
+                            $cursor->moveLeft(strlen($symbol));
+                            break;
+                        }
+                        case 'left':
+                        {
+                            $cursor->moveLeft(strlen($symbol) * 2 + 1);
+                            break;
+                        }
+                        case 'up':
+                        {
+                            $cursor->moveUp();
+                            $cursor->moveLeft(strlen($symbol));
+                            break;
+                        }
+                    }
+                    usleep(1000000 / $zoom);
+                    $timer = $timer - 1 / $zoom;
                 }
-                echo PHP_EOL;
             }
         }
     }

@@ -40,6 +40,6 @@ class InstructionCommand extends \Symfony\Component\Console\Command\Command
     {
         $this
             ->setHelp('This command allows you to get breathing practice instruction')
-            ->addArgument('practice', InputArgument::REQUIRED, 'Practice name');
+            ->addArgument('practice', InputArgument::OPTIONAL, 'Practice name', 'box');
     }
 }
