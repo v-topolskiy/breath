@@ -8,7 +8,7 @@ use breath\Exceptions\UndefinedPractice;
 
 class PracticeFactory
 {
-    public function __construct(private BoxPractice $box)
+    public function __construct(private BoxBreathingPractice $box, private AsymmetricBreathingPractice $asymmetric)
     {
     }
 
@@ -19,6 +19,7 @@ class PracticeFactory
     {
         return match ($name) {
             'box' => $this->box,
+            'asymmetric' => $this->asymmetric,
             default => throw new UndefinedPractice()
         };
     }

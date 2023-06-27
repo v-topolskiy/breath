@@ -62,7 +62,6 @@ Available commands:
 
 ```
 
-
 ![Alt Text](./box.gif)
 
 ### Instruction

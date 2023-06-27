@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace breath\Command;
 
 use breath\Exceptions\UndefinedPractice;
-use breath\Practice\BoxPractice;
+use breath\Practice\AsymmetricBreathingPractice;
+use breath\Practice\BoxBreathingPractice;
 use breath\Practice\PracticeFactory;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -23,7 +24,7 @@ class DescriptionCommand extends \Symfony\Component\Console\Command\Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $factory = new PracticeFactory(new BoxPractice());
+            $factory = new PracticeFactory(new BoxBreathingPractice(), new AsymmetricBreathingPractice());
             $practice = $factory->createPractice($input->getArgument('practice'));
             foreach ($practice->getDescription() as $line) {
                 $output->writeln($line);

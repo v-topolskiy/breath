@@ -7,7 +7,7 @@ namespace breath\Practice;
 use Symfony\Component\Console\Cursor;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class BoxPractice extends Practice
+class BoxBreathingPractice extends Practice
 {
     /**
      * {@inheritdoc}
