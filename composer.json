@@ -1,0 +1,15 @@
+{
+  "name": "v-topolskiy/breath",
+  "description": "breathing practices",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Vadim Topolskiy",
+      "email": "v.topolskiy@mu.se"
+    }
+  ],
+  "require": {
+    "php": ">=8.2"
+  }
+}
